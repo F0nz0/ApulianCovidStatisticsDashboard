@@ -57,7 +57,7 @@ fig4.update_geos(fitbounds="locations", visible=False)
 app = dash.Dash(__name__)
 server = app.server
 
-app.title("Dashboard Dati Covid-19 Puglia")
+app.title = "Dashboard Dati Covid-19 Puglia"
 
 #########################
 ######## LAYOUTS ########
@@ -69,7 +69,7 @@ app.layout = html.Div(children=[
 
     html.Center(html.Div(children="Questa è un'applicazione per la visualizzazione dei dati sanitari in Puglia e nelle sue Provincie.")),
 
-    html.Center(html.Div(children="Fonte Dati: Protezione Civile Italiana (Repository Github)")),
+    html.Center(html.Div(children="Fonte Dati: Protezione Civile Italiana (Repository GitHub)")),
 
     html.Center(html.Div(children="Autore: Fonz0")),
 
