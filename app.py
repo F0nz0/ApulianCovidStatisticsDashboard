@@ -54,7 +54,12 @@ fig4 = px.choropleth(
 fig4.update_layout(margin={"r": 0, "t": 0, "l": 0, "b": 0})
 fig4.update_geos(fitbounds="locations", visible=False)
 
-app = dash.Dash(__name__)
+app = dash.Dash(__name__,
+                meta_tags = [{
+                    'name': 'viewport',
+                    'content': 'width=device-width, initial-scale=1.0, maximum-scale=1.2, minumum-scale=0.5,'
+                }]
+                )
 server = app.server
 
 app.title = "Dashboard Dati Covid-19 Puglia"
