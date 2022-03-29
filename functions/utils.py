@@ -53,4 +53,10 @@ def retrieve_data():
     df_prov_map['Date'] = pd.to_datetime(df_prov_map['data'], format="%Y-%m-%d")
     df_prov_map['Date'] = df_prov_map['Date'].dt.strftime('%Y-%m-%d')
 
+    print(df_italia)
+    print(df_regioni)
+    print(df_province)
+    print(df_province_coord)
+    print(df_prov_map)
+
     return df_italia, df_regioni, df_province, df_province_coord, df_prov_map
