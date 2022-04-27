@@ -167,4 +167,4 @@ def update_figure_3(dato_di_interesse_italia):
 
 # Lauch App-Server and Browser-Web.
 if __name__ == '__main__':
-    app.run_server(debug=False, use_reloader=False)
+    app.run_server(debug=False, use_reloader=True)
