@@ -12,16 +12,12 @@ retrieved from the public GithHub Repository of the "Protezione Civile Italiana"
 # import dependency
 import pandas as pd
 import plotly.express as px
-import webbrowser
 from functions.utils import retrieve_data
 import dash
 import dash_core_components as dcc
 import dash_html_components as html
 from dash.dependencies import Input, Output
 import plotly.express as px
-from urllib.request import urlopen
-import json
-
 
 # download dati da repository Protezione Civile Italiana (GitHub)
 print('Downloading datasets from the GitHub repository of the "Protezione Civile Italiana"\nand elaborating them........')
@@ -60,6 +56,7 @@ app = dash.Dash(__name__,
                     'content': 'width=device-width, initial-scale=1.0, maximum-scale=1.2, minumum-scale=0.5,'
                 }]
                 )
+                
 server = app.server
 
 app.title = "Dashboard Dati Covid-19 Puglia"
@@ -134,7 +131,19 @@ app.layout = html.Div(children=[
 def update_figure_1(provincia):
     df = pd.DataFrame([df_province[provincia], df_province[provincia].diff()], index=["Totale Casi", "Variazione Casi"]).T
     fig1 = px.line(df, labels={'x':'DATA'}, log_y=True)
-    fig1.update_layout(legend_title='', transition_duration=1000)
+    fig1.update_layout(legend=dict( orientation="h", 
+                                    yanchor="bottom", 
+                                    y=1.02, 
+                                    xanchor="right", 
+                                    x=1), 
+                        margin=dict(l=20,
+                                    r=20,
+                                    b=100,
+                                    t=70,
+                                    pad=2),
+                        legend_title=provincia, 
+                        transition_duration=1000,
+                        yaxis_title=None)
     return fig1
 
 # Callback per update Grafico Regione.
@@ -148,7 +157,19 @@ def update_figure_2(dato_di_interesse):
     title = title[:-3]
     
     fig2 = px.line(df_puglia[dato_di_interesse], log_y=True)
-    fig2.update_layout(legend_title="Puglia", transition_duration=1000)
+    fig2.update_layout(legend=dict( orientation="h", 
+                                    yanchor="bottom", 
+                                    y=1.02, 
+                                    xanchor="right", 
+                                    x=1), 
+                        margin=dict(l=20,
+                                    r=20,
+                                    b=100,
+                                    t=70,
+                                    pad=2), 
+                        legend_title="Puglia", 
+                        transition_duration=1000,
+                        yaxis_title=None)
     return fig2
 
 # Callback per update Grafico Italia.
@@ -162,7 +183,19 @@ def update_figure_3(dato_di_interesse_italia):
     title = title[:-3]
     
     fig3 = px.line(df_italia[dato_di_interesse_italia], log_y=True)
-    fig3.update_layout(legend_title="Puglia", transition_duration=1000)
+    fig3.update_layout(legend=dict( orientation="h", 
+                                    yanchor="bottom", 
+                                    y=1.02, 
+                                    xanchor="right", 
+                                    x=1), 
+                        margin=dict(l=20,
+                                    r=20,
+                                    b=100,
+                                    t=70,
+                                    pad=2), 
+                        legend_title="Italia", 
+                        transition_duration=1000,
+                        yaxis_title=None)
     return fig3
 
 # Lauch App-Server and Browser-Web.
