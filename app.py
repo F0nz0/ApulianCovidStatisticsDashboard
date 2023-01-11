@@ -10,6 +10,9 @@ retrieved from the public GithHub Repository of the "Protezione Civile Italiana"
 '''
 
 # import dependency
+from urllib.request import urlopen
+import json
+
 import pandas as pd
 import plotly.express as px
 from functions.utils import retrieve_data
@@ -27,6 +30,16 @@ try:
 except:
     print("ERRROR!\nIt hasn't been possible to retrive and/or elaborate the data.")
 
+print("df_italia:", df_italia.memory_usage(deep=True).sum() /1024/1024, "Mb")
+print("df_regioni:", df_regioni.memory_usage(deep=True).sum() /1024/1024, "Mb")
+print("df_province:", df_province.memory_usage(deep=True).sum() /1024/1024, "Mb")
+print("df_province_coord:", df_province_coord.memory_usage(deep=True).sum() /1024/1024, "Mb")
+print("df_prov_map:", df_prov_map.memory_usage(deep=True).sum() /1024/1024, "Mb")
+print()
+print()
+
+print(df_prov_map)
+
 # dati Puglia
 df_puglia = df_regioni[df_regioni["denominazione_regione"]=="Puglia"].sort_values(by="data")
 df_puglia.data = pd.to_datetime(df_puglia.data)
@@ -38,17 +51,22 @@ df_italia.sort_values(by="data")
 df_italia.set_index("data", inplace=True)
 
 # Figura Mappa Italia Casi Totali
+'''print("Downloading geojson")
+with urlopen('https://raw.githubusercontent.com/openpolis/geojson-italy/master/geojson/limits_IT_provinces.geojson') as response:
+    counties = json.load(response)
+print("Geojson successfully downloaded")
+
 fig4 = px.choropleth(
     df_prov_map, 
-    geojson='https://raw.githubusercontent.com/openpolis/geojson-italy/master/geojson/limits_IT_provinces.geojson', 
-    locations='Province', 
+    geojson=counties, 
+    locations='denominazione_provincia', 
     color='Total Cases', 
     color_continuous_scale='Reds', 
-    featureidkey='properties.prov_istat_code_num', 
+    featureidkey='properties.prov_name', 
     animation_frame='Date', 
     range_color=(0, max(df_prov_map['Total Cases'])))
-fig4.update_layout(margin={"r": 0, "t": 0, "l": 0, "b": 0})
 fig4.update_geos(fitbounds="locations", visible=False)
+fig4.update_layout(margin={"r": 0, "t": 0, "l": 0, "b": 0})'''
 
 app = dash.Dash(__name__,
                 meta_tags = [{
@@ -111,13 +129,7 @@ app.layout = html.Div(children=[
                     value=['totale_positivi'],
                     multi=True),
 
-        dcc.Graph(id='grafico-italia')]),
-
-    html.Div(children=[
-        # Layout Mappa Italia
-        html.Center(html.H2(children='Dati Italia: Mappa')),
- 
-        dcc.Graph(id='grafico-italia-mappa', figure=fig4)])
+        dcc.Graph(id='grafico-italia')])
     ])
 
 #########################
