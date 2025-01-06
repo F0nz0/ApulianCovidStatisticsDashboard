@@ -1,7 +1,7 @@
 # ApulianCovidStatisticsDashboard
 A simple Dashboard for the real-time (daily changes) visualization of data regarding Apulian Covid-19 statistics released by Italian Civil Protection.
 
-For sake of demonstation, I deployed this web application on a free-hobby Heroku droplet available at the url: <br><br>
+For sake of demonstation, I deployed this web application on a free-hobby droplet available at the url: <br><br>
 
 https://f0nz0.pythonanywhere.com/
 
